@@ -1,0 +1,124 @@
+{
+  "name": "First Automation Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "models/gemini-3-flash-preview",
+          "cachedResultName": "models/gemini-3-flash-preview",
+          "cachedResultUrl": ""
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "={{ $json.question }}  , just his name, team , year"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        -112,
+        -32
+      ],
+      "id": "eea7ed53-3781-4436-a733-7cb4574c3cfa",
+      "name": "Message a model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "7ah0nGVnouje1sOk",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1e42f264-babc-4cf7-92a1-d840a58caaf2",
+              "name": "Gemini reposne",
+              "value": "={{ $json.content.parts[0].text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        240,
+        -32
+      ],
+      "id": "c36417a7-0965-4c54-8b62-77db02eb4419",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "formTitle": "Demo",
+        "formDescription": "enter your question",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "question"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        -336,
+        -32
+      ],
+      "id": "b548e285-40ad-4dbf-a4c4-c498eb6ab6cd",
+      "name": "On form submission",
+      "webhookId": "153b6914-3d33-4d27-8fb2-5510cea966e1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "fa6ed80c-20dd-43d6-930d-efb4c5324c24",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f8cfd05a4ab17668ba3c50eedcdd98c45e995676a6c54809b629d9b34083d33e"
+  },
+  "nodeGroups": [],
+  "id": "MepYwG9T0lvRf8lb",
+  "tags": []
+}
